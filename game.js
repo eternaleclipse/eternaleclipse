@@ -2,9 +2,6 @@ var g_tilesX = 20
 var g_tilesY = 20
 var g_tileSize = 32 // px
 
-var g_playerX = 10
-var g_playerY = 18
-
 var g_color_black = "#000000"
 var g_color_red = "#ff0000"
 var g_color_green = "#00ff00"
@@ -38,6 +35,47 @@ var g_objects = [{
     y: 18
 }]
 
+var Player = {
+    x: 10,
+    y: 18,
+    move: function(direction) {
+        var destX = Player.x
+        var destY = Player.y
+
+        switch (direction) {
+        case "up":
+            destY = Math.max(0, Player.y - 1)
+            break
+    
+        case "down":
+            destY = Math.min(19, Player.y + 1)
+            break
+    
+        case "left":
+            destX = Math.max(0, Player.x - 1)
+            break
+    
+        case "right":
+            destX = Math.min(19, Player.x + 1)
+            break
+        }
+
+        collidedObj = findObjectByPos(destX, destY)
+        if (collidedObj) {
+            if (collidedObj.onCollide) {
+                collidedObj.onCollide()
+            }
+        }
+        else {
+            Player.x = destX
+            Player.y = destY
+        }
+    },
+    draw: function (ctx) {
+        ctx.drawImage($("#img_player")[0], Player.x * g_tileSize, Player.y * g_tileSize)
+    }
+}
+
 function drawTile(ctx, x, y, color) {
     ctx.fillStyle = g_color_black
     ctx.beginPath()
@@ -69,35 +107,40 @@ function drawObjects(ctx) {
     })
 }
 
-function drawPlayer(ctx) {
-    ctx.drawImage($("#img_player")[0], g_playerX * g_tileSize, g_playerY * g_tileSize)
+function findObjectByPos(x, y) {
+    var foundObj
+    g_objects.forEach(function(obj) {
+        if (obj.x == x && obj.y == y) {
+            foundObj = obj
+        }
+    })
+    return foundObj
 }
-
 
 function updateScreen() {
     var ctx = $("#gameCanvas")[0].getContext("2d")
     drawMap(ctx)
     drawObjects(ctx)
-    drawPlayer(ctx)
+    Player.draw(ctx)
 }
 
 function setupInputHandler() {
     $(document).keydown(function(e) {
         switch(e.which) {
         case g_key_up:
-            g_playerY = Math.max(0, g_playerY - 1)
+            Player.move("up")
             break
     
         case g_key_down:
-            g_playerY = Math.min(19, g_playerY + 1)
+            Player.move("down")
             break
     
         case g_key_left:
-            g_playerX = Math.max(0, g_playerX - 1)
+            Player.move("left")
             break
     
         case g_key_right:
-            g_playerX = Math.min(19, g_playerX + 1)
+            Player.move("right")
             break
     
         default:
