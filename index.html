@@ -1,25 +1,32 @@
 <html>
     <title>SolarTiles</title>
     <head>
-            <link rel="stylesheet" type="text/css" href="style.css">
+            <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
         <div id="game" class="center">
             <canvas id="gameCanvas" width="640" height="640" />
         </div>
         <div id="resources" style="display: none">
-            <img id="img_player" src="player.png" />
-            <img id="img_tree" src="tree.png" />
-            <img id="img_house" src="house.png" />
-            <img id="img_streetlight" src="streetlight.png" />
-            <img id="img_ghost" src="ghost.png" />
-            <img id="img_portal_blue" src="portal_blue.png" />
-            <img id="img_portal_orange" src="portal_orange.png" />
+            <img id="img_player" src="images/player.png" />
+            <img id="img_tree" src="images/tree.png" />
+            <img id="img_house"  src="images/house.png" />
+            <img id="img_streetlight" src="images/streetlight.png" />
+            <img id="img_ghost" src="images/ghost.png" />
+            <img id="img_portal_blue" src="images/portal_blue.png" />
+            <img id="img_portal_orange" src="images/portal_orange.png" />
         </div>
         <script
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-        <script src="game.js"></script>
+
+        <script src="js/const.js"></script>
+        <script src="js/render.js"></script>
+        <script src="js/player.js"></script>
+        <script src="js/objects.js"></script>
+        <script src="js/map.js"></script>
+        <script src="js/input.js"></script>
+        <script src="js/game.js"></script>
     </body>
 </html>
