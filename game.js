@@ -63,6 +63,34 @@ var g_objects = [{
     image: "#img_house",
     x: 12,
     y: 18
+},
+{
+    image: "#img_ghost",
+    x: 13,
+    y: 12
+},
+{
+    image: "#img_streetlight",
+    x: 15,
+    y: 15
+},
+{
+    image: "#img_portal_orange",
+    x: 16,
+    y: 9,
+    onCollide: function() {
+        Player.x = 16
+        Player.y = 2
+    }
+},
+{
+    image: "#img_portal_blue",
+    x: 16,
+    y: 1,
+    onCollide: function() {
+        Player.x = 16
+        Player.y = 10
+    }
 }]
 
 var Player = {
