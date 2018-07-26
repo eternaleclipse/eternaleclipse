@@ -1,17 +1,47 @@
-var g_tilesX = 20
-var g_tilesY = 20
-var g_tileSize = 32 // px
 
-var g_color_black = "#000000"
-var g_color_red = "#ff0000"
-var g_color_green = "#00ff00"
-var g_color_blue = "#0000ff"
-var g_color_lightgreen = "#7fff7f"
+var Map = {
+    width:    20, // tiles
+    height:   20, // tiles
+    tileSize: 32, // px
+    drawTile: function(ctx, x, y, color) {
+        ctx.fillStyle = Colors.black
+        ctx.beginPath()
+    
+        // Draw Frame
+        ctx.moveTo(x * Map.tileSize, y * Map.tileSize)
+        ctx.lineTo((x + 1) * Map.tileSize, y * Map.tileSize)
+        ctx.lineTo((x + 1) * Map.tileSize, (y + 1) * Map.tileSize)
+        ctx.lineTo(x * Map.tileSize, (y + 1) * Map.tileSize)
+        ctx.lineTo(x * Map.tileSize, y * Map.tileSize)
+        
+        // Draw colored background
+        ctx.fillStyle = Colors.lightGreen
+        ctx.fillRect(x * Map.tileSize, y * Map.tileSize, Map.tileSize, Map.tileSize);
+        ctx.stroke()
+    },
+    draw: function(ctx) {
+        for (var x = 0; x < Map.width; x++) {
+            for (var y = 0; y < Map.height; y++) {
+                Map.drawTile(ctx, x, y, Colors.green)
+            }
+        }
+    }
+}
 
-var g_key_left = 37
-var g_key_up = 38
-var g_key_right = 39
-var g_key_down = 40
+var Colors = {
+    black:      "#000000",
+    red:        "#ff0000",
+    green:      "#00ff00",
+    blue:       "#0000ff",
+    lightGreen: "#7fff7f"
+}
+
+var Keys = {
+    left: 37,
+    up: 38,
+    right: 39,
+    down: 40
+}
 
 var g_objects = [{
     image: "#img_tree",
@@ -72,38 +102,13 @@ var Player = {
         }
     },
     draw: function (ctx) {
-        ctx.drawImage($("#img_player")[0], Player.x * g_tileSize, Player.y * g_tileSize)
-    }
-}
-
-function drawTile(ctx, x, y, color) {
-    ctx.fillStyle = g_color_black
-    ctx.beginPath()
-
-    // Draw Frame
-    ctx.moveTo(x * g_tileSize, y * g_tileSize)
-    ctx.lineTo((x + 1) * g_tileSize, y * g_tileSize)
-    ctx.lineTo((x + 1) * g_tileSize, (y + 1) * g_tileSize)
-    ctx.lineTo(x * g_tileSize, (y + 1) * g_tileSize)
-    ctx.lineTo(x * g_tileSize, y * g_tileSize)
-    
-    // Draw colored background
-    ctx.fillStyle = g_color_lightgreen
-    ctx.fillRect(x * g_tileSize, y * g_tileSize, g_tileSize, g_tileSize);
-    ctx.stroke()
-}
-
-function drawMap(ctx) {
-    for (var x = 0; x < g_tilesX; x++) {
-        for (var y = 0; y < g_tilesY; y++) {
-            drawTile(ctx, x, y, g_color_green)
-        }
+        ctx.drawImage($("#img_player")[0], Player.x * Map.tileSize, Player.y * Map.tileSize)
     }
 }
 
 function drawObjects(ctx) {
     g_objects.forEach(function(obj) {
-        ctx.drawImage($(obj.image)[0], obj.x * g_tileSize, obj.y * g_tileSize, g_tileSize, g_tileSize)
+        ctx.drawImage($(obj.image)[0], obj.x * Map.tileSize, obj.y * Map.tileSize, Map.tileSize, Map.tileSize)
     })
 }
 
@@ -119,7 +124,7 @@ function findObjectByPos(x, y) {
 
 function updateScreen() {
     var ctx = $("#gameCanvas")[0].getContext("2d")
-    drawMap(ctx)
+    Map.draw(ctx)
     drawObjects(ctx)
     Player.draw(ctx)
 }
@@ -127,19 +132,19 @@ function updateScreen() {
 function setupInputHandler() {
     $(document).keydown(function(e) {
         switch(e.which) {
-        case g_key_up:
+        case Keys.up:
             Player.move("up")
             break
     
-        case g_key_down:
+        case Keys.down:
             Player.move("down")
             break
     
-        case g_key_left:
+        case Keys.left:
             Player.move("left")
             break
     
-        case g_key_right:
+        case Keys.right:
             Player.move("right")
             break
     
