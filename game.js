@@ -31,6 +31,11 @@ var g_objects = [{
     onCollide: function() {
         console.log("ouch!")
     }
+},
+{
+    image: "#img_house",
+    x: 12,
+    y: 18
 }]
 
 function drawTile(ctx, x, y, color) {
