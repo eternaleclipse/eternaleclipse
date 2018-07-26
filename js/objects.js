@@ -24,4 +24,13 @@ var setupObjects = {
             }
         }
     },
+    mapPortal: function (obj) {
+        if (!obj.image) {
+            obj.image = "#img_default"
+        }
+
+        obj.onCollide = function() {
+            Map.load(obj.destMap)
+        }
+    }
 }

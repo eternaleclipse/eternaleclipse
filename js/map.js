@@ -35,7 +35,6 @@ var Map = {
     load: function(mapUrl) {
         $.getJSON(mapUrl, function(mapData) {
             Map.objects = mapData
-
             Map.objects.forEach(function(obj) {
                 if (setupObjects[obj.type]) {
                     setupObjects[obj.type](obj)

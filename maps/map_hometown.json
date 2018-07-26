@@ -9,7 +9,9 @@
     "y": 7
 },
 {
+    "type": "mapPortal",
     "image": "#img_house",
+    "destMap": "maps/map_home.json",
     "x": 12,
     "y": 18
 },
