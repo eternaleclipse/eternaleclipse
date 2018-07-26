@@ -2,7 +2,8 @@ var Map = {
     width:    20, // tiles
     height:   20, // tiles
     tileSize: 32, // px
-    inputEnabled: false,
+    loading: false,
+    tileColor: Colors.lightGreen,
     drawTile: function(ctx, x, y, color) {
         ctx.fillStyle = Colors.black
         ctx.beginPath()
@@ -15,7 +16,7 @@ var Map = {
         ctx.lineTo(x * Map.tileSize, y * Map.tileSize)
         
         // Draw colored background
-        ctx.fillStyle = Colors.lightGreen
+        ctx.fillStyle = color
         ctx.fillRect(x * Map.tileSize, y * Map.tileSize, Map.tileSize, Map.tileSize);
         ctx.stroke()
     },
@@ -23,7 +24,7 @@ var Map = {
         // Draw tiles
         for (var x = 0; x < Map.width; x++) {
             for (var y = 0; y < Map.height; y++) {
-                Map.drawTile(ctx, x, y, Colors.green)
+                Map.drawTile(ctx, x, y, Map.tileColor)
             }
         }
 
@@ -33,8 +34,20 @@ var Map = {
         })
     },
     load: function(mapUrl) {
+        Map.loading = true
         $.getJSON(mapUrl, function(mapData) {
-            Map.objects = mapData
+            if (mapData.tileColor) {
+                if (mapData.tileColor.startsWith("#")) {
+                    Map.tileColor = mapData.tileColor
+                } else {
+                    Map.tileColor = Colors[mapData.tileColor]
+                }
+            }
+
+            Player.x = mapData.playerX
+            Player.y = mapData.playerY
+
+            Map.objects = mapData.objects
             Map.objects.forEach(function(obj) {
                 if (setupObjects[obj.type]) {
                     setupObjects[obj.type](obj)

@@ -1,6 +1,6 @@
 var Player = {
-    x: 10,
-    y: 18,
+    x: 0,
+    y: 0,
     move: function(direction) {
         var destX = Player.x
         var destY = Player.y

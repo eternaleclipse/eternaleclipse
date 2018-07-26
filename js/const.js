@@ -3,7 +3,8 @@ var Colors = {
     red:        "#ff0000",
     green:      "#00ff00",
     blue:       "#0000ff",
-    lightGreen: "#7fff7f"
+    lightGreen: "#7fff7f",
+    cozyBrown:  "#996633"
 }
 
 var Keys = {

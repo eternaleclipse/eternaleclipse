@@ -1,0 +1,10 @@
+{
+    "playerX": 10,
+    "playerY": 18,
+    "tileColor": "cozyBrown",
+    "objects": [{
+        "type": "tree",
+        "x": 1,
+        "y": 1
+    }]
+}
